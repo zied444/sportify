@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml">
+    <TableView fx:id="programTable">
+        <columns>
+            <TableColumn text="Programme" fx:id="colProgramme"/>
+            <TableColumn text="Description" fx:id="colDescription"/>
+            <TableColumn text="Niveau" fx:id="colNiveau"/>
+        </columns>
+    </TableView>
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="S'inscrire" fx:id="subscribeButton" styleClass="primary-button"/>
+        <Button text="Retour" fx:id="backButton"/>
+    </HBox>
+</VBox>

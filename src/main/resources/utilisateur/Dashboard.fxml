@@ -4,9 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="20" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml">
-    <Label text="Bienvenue, John Doe!" fx:id="welcomeLabel" styleClass="title-label"/>
-    <Button text="Voir les programmes" fx:id="programsButton" styleClass="primary-button"/>
-    <Button text="Modifier mon profil" fx:id="editProfileButton"/>
-    <Button text="Se déconnecter" fx:id="logoutButton" styleClass="danger-button"/>
-</VBox>
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.utilisateur.Dashboard"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../styles/style.css">
+    <VBox spacing="20" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml">
+        <Label text="Bienvenue, John Doe!" fx:id="welcomeLabel" styleClass="title-label"/>
+        <Button text="Voir les programmes" fx:id="programsButton" styleClass="primary-button"/>
+        <Button text="Modifier mon profil" fx:id="editProfileButton"/>
+        <Button text="Se déconnecter" fx:id="logoutButton" styleClass="danger-button"/>
+    </VBox>
+</AnchorPane>

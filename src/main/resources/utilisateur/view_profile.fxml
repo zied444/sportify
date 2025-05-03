@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.utilisateur.ViewProfileController"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@../styles/style.css">
+
+    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="50.0"
+          AnchorPane.rightAnchor="50.0" AnchorPane.bottomAnchor="50.0">
+        <Label text="Votre Profil" styleClass="title-label"/>
+        
+        <VBox spacing="15" alignment="CENTER" styleClass="card" prefWidth="400">
+            <Label fx:id="emailLabel" styleClass="profile-label"/>
+            <Label fx:id="nomLabel" styleClass="profile-label"/>
+            <Label fx:id="prenomLabel" styleClass="profile-label"/>
+        </VBox>
+    </VBox>
+
+    <!-- Bouton de retour en haut à gauche -->
+    <Button fx:id="backButton" text="Retour" styleClass="back-button" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20"
+            onAction="#handleBack"/>
+
+</AnchorPane> 

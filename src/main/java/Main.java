@@ -4,12 +4,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import utils.DatabaseInitializer;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
+            // Initialize the database
+            DatabaseInitializer.initialize();
+            
             // Load the login view
             Parent root = FXMLLoader.load(getClass().getResource("/utilisateur/login.fxml"));
 
@@ -19,22 +23,17 @@ public class Main extends Application {
             // Configure the stage
             primaryStage.setTitle("Sportify");
             
-            // Add icon if available
             try {
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/imgs/logo.png")));
             } catch (Exception e) {
-                // Icon not found, continue without it
                 System.out.println("Logo not found: " + e.getMessage());
             }
 
-            // Set minimum dimensions
             primaryStage.setMinWidth(800);
             primaryStage.setMinHeight(600);
 
-            // Set the scene to the stage
             primaryStage.setScene(scene);
             
-            // Show the stage
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

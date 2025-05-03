@@ -6,20 +6,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.utilisateur.Login"
-            prefHeight="400.0" prefWidth="600.0"
+            fx:controller="controllers.utilisateur.LoginController"
+            prefHeight="600.0" prefWidth="800.0"
             stylesheets="@../styles/style.css">
 
-    <VBox alignment="CENTER" spacing="15" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="50.0"
+    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="50.0"
           AnchorPane.rightAnchor="50.0" AnchorPane.bottomAnchor="50.0">
+        <ImageView>
+            <image>
+                <Image url="@../imgs/logo.png" />
+            </image>
+        </ImageView>
         <Label text="Bienvenue sur Sportify" styleClass="title-label"/>
-        <TextField fx:id="emailField" promptText="Email"/>
-        <PasswordField fx:id="passwordField" promptText="Mot de passe"/>
-        <Button text="Se connecter" fx:id="loginButton" styleClass="primary-button"/>
-        <Hyperlink text="Créer un compte" fx:id="registerLink"/>
+        <Label text="Connectez-vous pour accéder à votre espace" styleClass="subtitle-label"/>
+        <VBox spacing="15" alignment="CENTER" styleClass="card" prefWidth="400">
+            <TextField fx:id="emailField" promptText="Email" styleClass="text-field" prefWidth="300"/>
+            <PasswordField fx:id="passwordField" promptText="Mot de passe" styleClass="password-field" prefWidth="300"/>
+            <Button fx:id="loginButton" text="Se connecter" styleClass="primary-button" prefWidth="300"/>
+            <Button fx:id="registerButton" text="S'inscrire" styleClass="primary-button" prefWidth="300"/>
+        </VBox>
     </VBox>
 
 </AnchorPane>

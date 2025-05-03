@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.utilisateur.EditProfileController"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@../styles/style.css">
+
+    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="50.0"
+          AnchorPane.rightAnchor="50.0" AnchorPane.bottomAnchor="50.0">
+        <Label text="Modifier le profil" styleClass="title-label"/>
+        
+        <VBox spacing="15" alignment="CENTER" styleClass="card" prefWidth="400">
+            <TextField fx:id="emailField" promptText="Email" prefWidth="300"/>
+            <TextField fx:id="passwordField" promptText="Mot de passe" prefWidth="300"/>
+            <TextField fx:id="nomField" promptText="Nom" prefWidth="300"/>
+            <TextField fx:id="prenomField" promptText="Prénom" prefWidth="300"/>
+            
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Enregistrer" fx:id="saveButton" styleClass="primary-button" prefWidth="145"/>
+                <Button text="Annuler" fx:id="cancelButton" styleClass="primary-button" prefWidth="145"/>
+            </HBox>
+        </VBox>
+    </VBox>
+
+    <!-- Bouton de retour en haut à gauche -->
+    <Button text="Retour" styleClass="back-button" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20"
+            onAction="#handleBack"/>
+
+</AnchorPane> 

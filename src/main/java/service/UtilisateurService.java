@@ -30,13 +30,19 @@ public class UtilisateurService implements IUtilisateurService {
             stmt.setString(1, utilisateur.getNom());
             stmt.setString(2, utilisateur.getPrenom());
             stmt.setString(3, utilisateur.getEmail());
-            stmt.setString(4, PasswordHasher.hashPassword(utilisateur.getMotDePasse())); // Hash du mot de passe
+            stmt.setString(4, PasswordHasher.hashPassword(utilisateur.getMotDePasse()));
             stmt.setString(5, utilisateur.getRole());
             stmt.setString(6, utilisateur.getPreferencesSportives());
-            stmt.executeUpdate();
-            System.out.println("Utilisateur ajouté avec succès !");
+            
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Utilisateur ajouté avec succès !");
+            } else {
+                System.out.println("Aucun utilisateur n'a été ajouté !");
+            }
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'ajout de l'utilisateur : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -66,6 +72,7 @@ public class UtilisateurService implements IUtilisateurService {
             }
         } catch (SQLException e) {
             System.out.println("Erreur de connexion : " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

@@ -5,20 +5,24 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.utilisateur.Programmes"
+            fx:controller="controllers.utilisateur.ProgramsController"
             prefHeight="400.0" prefWidth="600.0"
             stylesheets="@../styles/style.css">
-    <VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml">
+
+    <VBox fx:id="programsContainer" spacing="10" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
         <TableView fx:id="programTable">
             <columns>
-                <TableColumn text="Programme" fx:id="colProgramme"/>
-                <TableColumn text="Description" fx:id="colDescription"/>
-                <TableColumn text="Niveau" fx:id="colNiveau"/>
+                <TableColumn fx:id="colProgramme" text="Programme"/>
+                <TableColumn fx:id="colDescription" text="Description"/>
+                <TableColumn fx:id="colNiveau" text="Niveau"/>
             </columns>
         </TableView>
+
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button text="S'inscrire" fx:id="subscribeButton" styleClass="primary-button"/>
-            <Button text="Retour" fx:id="backButton"/>
+            <Button fx:id="subscribeButton" text="S'inscrire" styleClass="primary-button"/>
+            <Button fx:id="backButton" text="Retour" onAction="#handleBack"/>
         </HBox>
+
     </VBox>
 </AnchorPane>

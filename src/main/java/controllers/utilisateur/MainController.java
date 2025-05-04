@@ -11,8 +11,8 @@ public class MainController {
     private Button viewProfileButton;
     @FXML
     private Button programsButton;
-    @FXML
-    private Button dashboardButton;
+    /*@FXML
+    private Button dashboardButton;*/
     @FXML
     private Button editProfileButton;
     @FXML
@@ -28,7 +28,7 @@ public class MainController {
     private void initialize() {
         viewProfileButton.setOnAction(event -> handleViewProfile());
         programsButton.setOnAction(event -> handlePrograms());
-        dashboardButton.setOnAction(event -> handleDashboard());
+       /* dashboardButton.setOnAction(event -> handleDashboard());*/
         editProfileButton.setOnAction(event -> handleEditProfile());
         logoutButton.setOnAction(event -> handleLogout());
         deleteAccountButton.setOnAction(event -> handleDeleteAccount());
@@ -47,9 +47,9 @@ public class MainController {
         NavigationUtils.navigateTo("/utilisateur/Programmes.fxml", (Stage) programsButton.getScene().getWindow(), currentUser);
     }
 
-    private void handleDashboard() {
+    /*private void handleDashboard() {
         NavigationUtils.navigateTo("/utilisateur/dashboard.fxml", (Stage) dashboardButton.getScene().getWindow(), currentUser);
-    }
+    }*/
 
     private void handleEditProfile() {
         NavigationUtils.navigateTo("/utilisateur/edit_profile.fxml", (Stage) editProfileButton.getScene().getWindow(), currentUser);
@@ -64,7 +64,7 @@ public class MainController {
         handleLogout();
     }
 
-    private void handleBack() {
+    public void handleBack() {
         NavigationUtils.navigateTo("/utilisateur/login.fxml", (Stage) backButton.getScene().getWindow());
     }
 } 

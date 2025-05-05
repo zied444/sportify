@@ -1,10 +1,10 @@
 .root {
     -fx-background-color: linear-gradient(to bottom right, 
-        #e0e0e0 0%, 
-        #d0d0d0 25%, 
-        #ffb3b3 50%, 
-        #b3ffb3 75%, 
-        #e0e0e0 100%);
+        #f0f0f0 0%, 
+        #e0e0e0 25%, 
+        #ff9999 50%, 
+        #99ff99 75%, 
+        #f0f0f0 100%);
     -fx-font-family: 'Segoe UI', Arial, sans-serif;
 }
 

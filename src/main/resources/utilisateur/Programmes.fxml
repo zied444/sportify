@@ -6,7 +6,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.utilisateur.ProgramsController"
-            prefHeight="400.0" prefWidth="600.0"
+            prefHeight="600.0" prefWidth="800.0"
             stylesheets="@../styles/style.css">
 
     <VBox fx:id="programsContainer" spacing="10" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
@@ -20,9 +20,12 @@
         </TableView>
 
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button fx:id="subscribeButton" text="S'inscrire" styleClass="primary-button"/>
-            <Button fx:id="backButton" text="Retour" onAction="#handleBack"/>
+
+            <Button fx:id="backButton" text="Retour" styleClass="back-button" onAction="#handleBack"/>
+
         </HBox>
 
     </VBox>
+
+
 </AnchorPane>

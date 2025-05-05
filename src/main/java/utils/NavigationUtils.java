@@ -28,14 +28,20 @@ public class NavigationUtils {
             } else if (controller instanceof controllers.utilisateur.ViewProfileController) {
                 ((controllers.utilisateur.ViewProfileController) controller).setUser(utilisateur);
             } else if (controller instanceof controllers.utilisateur.EditProfileController) {
+                if (utilisateur == null) {
+                    throw new IllegalArgumentException("L'utilisateur ne peut pas être null pour la vue d'édition de profil");
+                }
                 ((controllers.utilisateur.EditProfileController) controller).setUser(utilisateur);
             }
             
             currentStage.setScene(new Scene(root));
             currentStage.show();
         } catch (IOException e) {
-            e.printStackTrace(); // Affiche le stacktrace complet dans la console
+            e.printStackTrace();
             AlertUtils.showError("Erreur", "Impossible de charger la vue: " + fxmlPath + "\n" + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            AlertUtils.showError("Erreur", e.getMessage());
         }
     }
 

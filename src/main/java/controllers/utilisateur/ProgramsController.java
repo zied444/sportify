@@ -1,13 +1,20 @@
 package controllers.utilisateur;
 
+import constants.Programme;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import entities.Utilisateur;
@@ -26,44 +33,56 @@ public class ProgramsController {
     private Button subscribeButton;
 
     @FXML
-    private TableView<?> programTable;
+    private TableView<Programme> programTable;
 
     @FXML
-    private TableColumn<?, ?> colProgramme;
+    private TableColumn<Programme, String> colProgramme;
 
     @FXML
-    private TableColumn<?, ?> colDescription;
+    private TableColumn<Programme, String> colDescription;
 
     @FXML
-    private TableColumn<?, ?> colNiveau;
+    private TableColumn<Programme, String> colNiveau;
 
     private Utilisateur currentUser;
 
     @FXML
     public void initialize() {
+        colProgramme.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        colNiveau.setCellValueFactory(new PropertyValueFactory<>("niveau"));
+
+        // Set image in description column (still named "description")
+        colDescription.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDescription()));
+
+        colDescription.setCellFactory(column -> new TableCell<Programme, String>() {
+            private final ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(String imagePath, boolean empty) {
+                super.updateItem(imagePath, empty);
+                if (empty || imagePath == null) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        Image image = new Image(imagePath, 60, 60, true, true);
+                        imageView.setImage(image);
+                        setGraphic(imageView);
+                    } catch (Exception e) {
+                        setText("Invalid image");
+                    }
+                }
+            }
+        });
+
         loadPrograms();
     }
 
     public void setUser(Utilisateur user) {
         this.currentUser = user;
-    }
-
-    private void loadPrograms() {
-        programsContainer.getChildren().clear();
-
-        // Exemple de programmes
-        String[] programs = {
-                "Programme Débutant",
-                "Programme Intermédiaire",
-                "Programme Avancé",
-                "Programme Perte de Poids",
-                "Programme Prise de Masse"
-        };
-
-        for (String program : programs) {
-            Label programLabel = new Label(program);
-            programLabel.getStyleClass().add("program-label");
-            programsContainer.getChildren().add(programLabel);
+        if (user != null) {
+            System.out.println("ProgramsController: User set successfully - " + user.getEmail());
+        } else {
+            System.out.println("ProgramsController: Warning - User set to null");
         }
     }
 
@@ -74,12 +93,30 @@ public class ProgramsController {
             Parent root = loader.load();
 
             MainController mainController = loader.getController();
-            mainController.setUser(currentUser);
+            if (currentUser != null) {
+                System.out.println("ProgramsController: Returning to main with user - " + currentUser.getEmail());
+                mainController.setUser(currentUser);
+            } else {
+                System.out.println("ProgramsController: Warning - currentUser is null when returning to main");
+            }
 
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             AlertUtils.showError("Erreur", "Impossible de charger la vue principale");
         }
+    }
+
+    private void loadPrograms() {
+        ObservableList<Programme> programmes = FXCollections.observableArrayList(
+                new Programme("Programme Débutant", "file:imgs/debutant.jpg", "Débutant"),
+                new Programme("Programme Intermédiaire", "file:images/intermediaire.png", "Intermédiaire"),
+                new Programme("Programme Avancé", "file:images/avance.png", "Avancé"),
+                new Programme("Programme Perte de Poids", "file:images/perte_poids.png", "Tous niveaux"),
+                new Programme("Programme Prise de Masse", "file:images/prise_masse.png", "Avancé")
+        );
+
+        programTable.setItems(programmes);
     }
 }

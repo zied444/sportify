@@ -16,7 +16,7 @@
         
         <VBox spacing="15" alignment="CENTER" styleClass="card" prefWidth="400">
             <Button text="Voir Profil" fx:id="viewProfileButton" styleClass="primary-button" prefWidth="300"/>
-            <Button text="Programmes" fx:id="programsButton" styleClass="primary-button" prefWidth="300"/>
+            <Button text="Nos Programmes" fx:id="programsButton" styleClass="primary-button" prefWidth="300"/>
             <Button text="Modifier le profil" fx:id="editProfileButton" styleClass="primary-button" prefWidth="300"/>
             <Button text="Supprimer le compte" fx:id="deleteAccountButton" styleClass="danger-button" prefWidth="300"/>
             <Button text="Se déconnecter" fx:id="logoutButton" styleClass="primary-button" prefWidth="300"/>

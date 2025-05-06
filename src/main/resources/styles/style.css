@@ -74,8 +74,8 @@
     -fx-background-radius: 10px;
     -fx-border-color: #bfc2c4;
     -fx-border-radius: 10px;
-    -fx-padding: 12px;
-    -fx-font-size: 15px;
+    -fx-padding: 10px;
+    -fx-font-size: 13px;
     -fx-text-fill: #222;
     -fx-effect: none;
     -fx-transition: all 0.18s cubic-bezier(.4,2,.6,1);
@@ -85,6 +85,27 @@
     -fx-border-color: #217a4b;
     -fx-background-color: #fff;
     -fx-effect: dropshadow(gaussian, rgba(33,122,75,0.12), 8, 0, 0, 2);
+}
+
+/* Style pour les labels dans le formulaire */
+GridPane Label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #444;
+    -fx-font-weight: normal;
+}
+
+/* Ajustement de la taille des colonnes dans le GridPane */
+GridPane {
+    -fx-hgap: 15;
+    -fx-vgap: 10;
+    -fx-padding: 10;
+}
+
+/* Ajustement de la largeur des champs de texte */
+GridPane .text-field, 
+GridPane .password-field {
+    -fx-pref-width: 250px;
+    -fx-min-width: 250px;
 }
 
 .hyperlink {
@@ -261,4 +282,40 @@
     -fx-padding: 12 8 12 8;
     -fx-background-color: transparent;
     -fx-border-width: 0;
+}
+
+/* Styles spécifiques pour la vue admin */
+.admin-text-field, .admin-password-field {
+    -fx-background-color: #e0e1e2;
+    -fx-background-radius: 10px;
+    -fx-border-color: #bfc2c4;
+    -fx-border-radius: 10px;
+    -fx-padding: 8px;
+    -fx-font-size: 12px;
+    -fx-text-fill: #222;
+    -fx-effect: none;
+}
+
+.admin-text-field:focused, .admin-password-field:focused {
+    -fx-border-color: #217a4b;
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(33,122,75,0.12), 8, 0, 0, 2);
+}
+
+.admin-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #444;
+    -fx-font-weight: normal;
+}
+
+.admin-grid {
+    -fx-hgap: 12;
+    -fx-vgap: 8;
+    -fx-padding: 8;
+}
+
+.admin-grid .text-field, 
+.admin-grid .password-field {
+    -fx-pref-width: 220px;
+    -fx-min-width: 220px;
 }

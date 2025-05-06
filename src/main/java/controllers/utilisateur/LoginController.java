@@ -1,5 +1,6 @@
 package controllers.utilisateur;
 
+import controllers.admin.AdminDashboardController;
 import entities.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,17 +62,35 @@ public class LoginController {
         Utilisateur user = ((UtilisateurService) utilisateurService).connecter(email, password);
         if (user != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/main.fxml"));
-                Parent root = loader.load();
-                
-                MainController mainController = loader.getController();
-                mainController.setUser(user);
-                
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show();
+                FXMLLoader loader;
+                if ("admin".equalsIgnoreCase(user.getRole())) {
+                    loader = new FXMLLoader(getClass().getResource("/admin/adminDashboard.fxml"));
+                    Parent root = loader.load();
+                    
+                    AdminDashboardController adminController = loader.getController();
+                    adminController.setCurrentAdmin(user);
+                    
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+                    stage.setScene(scene);
+                    stage.show();
+                } else {
+                    loader = new FXMLLoader(getClass().getResource("/utilisateur/main.fxml"));
+                    Parent root = loader.load();
+                    
+                    MainController mainController = loader.getController();
+                    mainController.setUser(user);
+                    
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+                    stage.setScene(scene);
+                    stage.show();
+                }
             } catch (IOException e) {
-                AlertUtils.showError("Erreur", "Impossible de charger la vue principale");
+                e.printStackTrace(); // Pour le débogage
+                AlertUtils.showError("Erreur", "Impossible de charger la vue principale: " + e.getMessage());
             }
         } else {
             AlertUtils.showError("Erreur", "Email ou mot de passe incorrect");

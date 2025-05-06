@@ -5,7 +5,7 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private String email;
-    private String motDePasse;
+    private String password;
     private String role;
     private String preferencesSportives;
 
@@ -15,7 +15,7 @@ public class Utilisateur {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
-        this.motDePasse = motDePasse;
+        this.password = motDePasse;
         this.role = role;
         this.preferencesSportives = preferencesSportives;
     }
@@ -34,8 +34,8 @@ public class Utilisateur {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getMotDePasse() { return motDePasse; }
-    public void setMotDePasse(String motDePasse) { this.motDePasse = motDePasse; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }

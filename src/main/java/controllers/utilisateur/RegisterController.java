@@ -1,114 +1,133 @@
 package controllers.utilisateur;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ChoiceBox;
-import javafx.stage.Stage;
+import constants.Roles;
 import entities.Utilisateur;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import interfaces.IService;
 import service.UtilisateurService;
 import utils.AlertUtils;
-import utils.NavigationUtils;
+import utils.EmailUtils;
+
+import java.io.IOException;
 
 public class RegisterController {
-    @FXML
-    private TextField emailField;
-    @FXML
-    private PasswordField passwordField;
     @FXML
     private TextField nomField;
     @FXML
     private TextField prenomField;
     @FXML
-    private ChoiceBox<String> roleField;
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordField;
     @FXML
     private TextField preferencesField;
+    @FXML
+    private ChoiceBox<String> roleChoiceBox;
     @FXML
     private Button registerButton;
     @FXML
     private Button cancelButton;
-    @FXML
-    private Button backButton;
 
-    private final UtilisateurService utilisateurService = new UtilisateurService();
+    private IService<Utilisateur> utilisateurService;
+
+    public RegisterController() {
+        this.utilisateurService = new UtilisateurService();
+    }
 
     @FXML
     private void initialize() {
-        // Initialize ChoiceBox items
-        roleField.getItems().addAll("Athlete", "Coach", "Admin");
-        // Activer le bouton d'inscription uniquement si tous les champs sont remplis
-        registerButton.setDisable(true);
-        emailField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
-        passwordField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
-        nomField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
-        prenomField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
-        roleField.valueProperty().addListener((obs, oldVal, newVal) -> validateFields());
-        preferencesField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
+        try {
+            // Initialiser le ChoiceBox avec les rôles disponibles
+            roleChoiceBox.setItems(FXCollections.observableArrayList(Roles.ATHLETE, Roles.COACH));
+            roleChoiceBox.setValue(Roles.ATHLETE);
 
-        registerButton.setOnAction(event -> handleRegister());
-        cancelButton.setOnAction(event -> handleCancel());
-        backButton.setOnAction(event -> handleBack());
+            // Ajouter les gestionnaires d'événements pour les boutons
+            if (registerButton != null) {
+                registerButton.setOnAction(event -> handleRegister());
+            }
+            if (cancelButton != null) {
+                cancelButton.setOnAction(event -> handleBack());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.showError("Erreur d'initialisation", "Une erreur est survenue lors de l'initialisation du formulaire : " + e.getMessage());
+        }
     }
 
-    private void validateFields() {
-        boolean isValid = !emailField.getText().isEmpty() && 
-                         !passwordField.getText().isEmpty() && 
-                         !nomField.getText().isEmpty() && 
-                         !prenomField.getText().isEmpty() &&
-                         roleField.getValue() != null &&
-                         !preferencesField.getText().isEmpty();
-        registerButton.setDisable(!isValid);
-    }
-
+    @FXML
     private void handleRegister() {
-        String email = emailField.getText();
-        String password = passwordField.getText();
-        String nom = nomField.getText();
-        String prenom = prenomField.getText();
-        String role = roleField.getValue();
-        String preferences = preferencesField.getText();
+        try {
+            String nom = nomField.getText();
+            String prenom = prenomField.getText();
+            String email = emailField.getText();
+            String password = passwordField.getText();
+            String preferences = preferencesField.getText();
+            String role = roleChoiceBox.getValue();
 
-        if (email.isEmpty() || password.isEmpty() || nom.isEmpty() || prenom.isEmpty() || role == null || preferences.isEmpty()) {
-            AlertUtils.showError("Erreur", "Veuillez remplir tous les champs");
-            return;
+            if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || password.isEmpty() || preferences.isEmpty()) {
+                AlertUtils.showError("Erreur", "Veuillez remplir tous les champs");
+                return;
+            }
+
+            // Créer l'utilisateur
+            Utilisateur user = new Utilisateur();
+            user.setNom(nom);
+            user.setPrenom(prenom);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setRole(role);
+            user.setPreferencesSportives(preferences);
+
+            // Enregistrer l'utilisateur dans la base de données
+            utilisateurService.ajouterUtilisateur(user);
+            System.out.println("Utilisateur enregistré avec succès dans la base de données");
+
+            // Envoyer l'email de confirmation
+            try {
+                System.out.println("Tentative d'envoi de l'email de confirmation...");
+                EmailUtils.sendConfirmationEmail(email, "Bienvenue sur Sportify !");
+                AlertUtils.showInfo("Succès", "Inscription réussie ! Un email de confirmation a été envoyé à votre adresse.");
+            } catch (Exception e) {
+                System.err.println("Erreur lors de l'envoi de l'email : " + e.getMessage());
+                e.printStackTrace();
+                // On continue même si l'email échoue
+                AlertUtils.showInfo("Succès", "Inscription réussie ! (Note : L'envoi de l'email a échoué)");
+            }
+
+            // Retourner à la page de connexion
+            handleBack();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.showError("Erreur", "Une erreur est survenue lors de l'inscription : " + e.getMessage());
         }
-
-        // Vérifier le format de l'email
-        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            AlertUtils.showError("Erreur", "Format d'email invalide");
-            return;
-        }
-
-        // Vérifier la longueur du mot de passe
-        if (password.length() < 6) {
-            AlertUtils.showError("Erreur", "Le mot de passe doit contenir au moins 6 caractères");
-            return;
-        }
-
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setEmail(email);
-        utilisateur.setMotDePasse(password);
-        utilisateur.setNom(nom);
-        utilisateur.setPrenom(prenom);
-        utilisateur.setRole(role);
-        utilisateur.setPreferencesSportives(preferences);
-
-        utilisateurService.ajouterUtilisateur(utilisateur);
-        AlertUtils.showSuccess("Succès", "Inscription réussie ! Vous pouvez maintenant vous connecter.");
-        returnToLogin();
-    }
-
-    private void handleCancel() {
-        returnToLogin();
-    }
-
-    private void returnToLogin() {
-        NavigationUtils.navigateTo("/utilisateur/login.fxml", (Stage) registerButton.getScene().getWindow());
     }
 
     @FXML
     private void handleBack() {
-        handleCancel();
+        try {
+            String fxmlPath = "/utilisateur/login.fxml";
+            System.out.println("Tentative de chargement de : " + fxmlPath);
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            if (loader.getLocation() == null) {
+                throw new IOException("Impossible de trouver le fichier FXML : " + fxmlPath);
+            }
+            
+            Parent root = loader.load();
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            AlertUtils.showError("Erreur", "Impossible de charger la vue de connexion : " + e.getMessage());
+        }
     }
 } 

@@ -21,7 +21,7 @@
             <PasswordField fx:id="passwordField" promptText="Mot de passe" styleClass="password-field" prefWidth="300"/>
             <TextField fx:id="nomField" promptText="Nom" styleClass="text-field" prefWidth="300"/>
             <TextField fx:id="prenomField" promptText="Prénom" styleClass="text-field" prefWidth="300"/>
-            <ChoiceBox fx:id="roleField" prefWidth="300"/>
+            <ChoiceBox fx:id="roleChoiceBox" prefWidth="300"/>
             <TextField fx:id="preferencesField" promptText="Préférences sportives (ex: Football, Tennis)" styleClass="text-field" prefWidth="300"/>
             <HBox spacing="10" alignment="CENTER">
                 <Button text="S'inscrire" fx:id="registerButton" styleClass="primary-button" prefWidth="145"/>

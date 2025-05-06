@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
@@ -19,6 +19,7 @@
             <TextField fx:id="passwordField" promptText="Mot de passe" prefWidth="300"/>
             <TextField fx:id="nomField" promptText="Nom" prefWidth="300"/>
             <TextField fx:id="prenomField" promptText="Prénom" prefWidth="300"/>
+            <TextField fx:id="preferencesField" promptText="Préférences sportives" prefWidth="300"/>
             
             <HBox spacing="10" alignment="CENTER">
                 <Button text="Enregistrer" fx:id="saveButton" styleClass="primary-button" prefWidth="145"/>

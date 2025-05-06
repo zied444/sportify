@@ -1,14 +1,20 @@
 package controllers.utilisateur;
 
+import entities.Utilisateur;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import entities.Utilisateur;
+import interfaces.IService;
 import service.UtilisateurService;
 import utils.AlertUtils;
 import utils.NavigationUtils;
+
+import java.io.IOException;
 
 public class LoginController {
     @FXML
@@ -20,7 +26,11 @@ public class LoginController {
     @FXML
     private Button registerButton;
 
-    private final UtilisateurService utilisateurService = new UtilisateurService();
+    private IService<Utilisateur> utilisateurService;
+
+    public LoginController() {
+        this.utilisateurService = new UtilisateurService();
+    }
 
     @FXML
     private void initialize() {
@@ -38,6 +48,7 @@ public class LoginController {
         loginButton.setDisable(!isValid);
     }
 
+    @FXML
     private void handleLogin() {
         String email = emailField.getText();
         String password = passwordField.getText();
@@ -47,15 +58,38 @@ public class LoginController {
             return;
         }
 
-        Utilisateur utilisateur = utilisateurService.connecter(email, password);
-        if (utilisateur != null) {
-            NavigationUtils.navigateTo("/utilisateur/main.fxml", (Stage) loginButton.getScene().getWindow(), utilisateur);
+        Utilisateur user = ((UtilisateurService) utilisateurService).connecter(email, password);
+        if (user != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/main.fxml"));
+                Parent root = loader.load();
+
+                MainController mainController = loader.getController();
+                mainController.setUser(user);
+
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                AlertUtils.showError("Erreur", "Impossible de charger la vue principale");
+            }
         } else {
             AlertUtils.showError("Erreur", "Email ou mot de passe incorrect");
         }
     }
 
+    @FXML
     private void handleRegister() {
-        NavigationUtils.navigateTo("/utilisateur/Register.fxml", (Stage) registerButton.getScene().getWindow());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/Register.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) registerButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Ajout pour le débogage
+            AlertUtils.showError("Erreur", "Impossible de charger la vue d'inscription: " + e.getMessage());
+        }
     }
 }

@@ -23,6 +23,8 @@ public class EditProfileController {
     @FXML
     private TextField prenomField;
     @FXML
+    private TextField preferencesField;
+    @FXML
     private Button saveButton;
     @FXML
     private Button cancelButton;
@@ -37,6 +39,7 @@ public class EditProfileController {
         passwordField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
         nomField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
         prenomField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
+        preferencesField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
 
         saveButton.setOnAction(event -> handleSave());
         cancelButton.setOnAction(event -> handleCancel());
@@ -46,16 +49,18 @@ public class EditProfileController {
         boolean isValid = !emailField.getText().isEmpty() && 
                          !passwordField.getText().isEmpty() && 
                          !nomField.getText().isEmpty() && 
-                         !prenomField.getText().isEmpty();
+                         !prenomField.getText().isEmpty() &&
+                         !preferencesField.getText().isEmpty();
         saveButton.setDisable(!isValid);
     }
 
     public void setUser(Utilisateur user) {
         this.currentUser = user;
-        emailField.setText(user.getEmail());
-        passwordField.setText(user.getMotDePasse());
         nomField.setText(user.getNom());
         prenomField.setText(user.getPrenom());
+        emailField.setText(user.getEmail());
+        passwordField.setText(user.getPassword());
+        preferencesField.setText(user.getPreferencesSportives());
     }
 
     public void handleSave() {
@@ -63,8 +68,9 @@ public class EditProfileController {
         String password = passwordField.getText();
         String nom = nomField.getText();
         String prenom = prenomField.getText();
+        String preferences = preferencesField.getText();
 
-        if (email.isEmpty() || password.isEmpty() || nom.isEmpty() || prenom.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty() || nom.isEmpty() || prenom.isEmpty() || preferences.isEmpty()) {
             AlertUtils.showError("Erreur", "Veuillez remplir tous les champs");
             return;
         }
@@ -82,9 +88,10 @@ public class EditProfileController {
         }
 
         currentUser.setEmail(email);
-        currentUser.setMotDePasse(password);
+        currentUser.setPassword(password);
         currentUser.setNom(nom);
         currentUser.setPrenom(prenom);
+        currentUser.setPreferencesSportives(preferences);
 
         UtilisateurService utilisateurService = new UtilisateurService();
         utilisateurService.modifierUtilisateur(currentUser);

@@ -1,7 +1,7 @@
 package service;
 
 import entities.Utilisateur;
-import interfaces.IUtilisateurService;
+import interfaces.IService;
 import utils.DatabaseConnection;
 import utils.EmailValidator;
 import utils.PasswordHasher;
@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtilisateurService implements IUtilisateurService {
+public class UtilisateurService implements IService<Utilisateur> {
     private Connection conn;
 
     public UtilisateurService() {
@@ -30,10 +30,10 @@ public class UtilisateurService implements IUtilisateurService {
             stmt.setString(1, utilisateur.getNom());
             stmt.setString(2, utilisateur.getPrenom());
             stmt.setString(3, utilisateur.getEmail());
-            stmt.setString(4, PasswordHasher.hashPassword(utilisateur.getMotDePasse()));
+            stmt.setString(4, PasswordHasher.hashPassword(utilisateur.getPassword()));
             stmt.setString(5, utilisateur.getRole());
             stmt.setString(6, utilisateur.getPreferencesSportives());
-            
+
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Utilisateur ajouté avec succès !");
@@ -128,7 +128,6 @@ public class UtilisateurService implements IUtilisateurService {
         }
     }
 
-
     public List<Utilisateur> rechercherParNom(String nom) {
         List<Utilisateur> utilisateurs = new ArrayList<>();
         String sql = "SELECT * FROM utilisateur WHERE nom LIKE ?";
@@ -150,7 +149,6 @@ public class UtilisateurService implements IUtilisateurService {
         }
         return utilisateurs;
     }
-
 
     public List<Utilisateur> filtrerParRole(String role) {
         List<Utilisateur> utilisateurs = new ArrayList<>();

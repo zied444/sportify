@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class PasswordHasher {
 
-
+    // Méthode pour hasher un mot de passe
     public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -20,7 +20,7 @@ public class PasswordHasher {
         }
     }
 
-
+    // Méthode pour vérifier un mot de passe en comparant son hachage
     public static boolean checkPassword(String password, String hashedPassword) {
         return hashPassword(password).equals(hashedPassword);
     }

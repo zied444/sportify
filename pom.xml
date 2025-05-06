@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -12,38 +13,33 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <javafx.version>17.0.14</javafx.version>
+        <javafx.version>17.0.2</javafx.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
     <dependencies>
-        <!-- JavaFX -->
+        <!-- JavaFX Dependencies -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/javafx-sdk-17.0.14/lib/javafx.controls.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/javafx-sdk-17.0.14/lib/javafx.fxml.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>${javafx.version}</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/javafx-sdk-17.0.14/lib/javafx.graphics.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-base</artifactId>
-            <version>${javafx.version}</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/javafx-sdk-17.0.14/lib/javafx.base.jar</systemPath>
         </dependency>
 
         <!-- MySQL Connector -->
@@ -58,6 +54,20 @@
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
+        </dependency>
+
+        <!-- JavaMail API -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        
+        <!-- Activation Framework -->
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
 
@@ -79,8 +89,6 @@
                 <configuration>
                     <mainClass>Main</mainClass>
                     <options>
-                        <option>--module-path</option>
-                        <option>${project.basedir}/lib/javafx-sdk-17.0.14/lib</option>
                         <option>--add-modules</option>
                         <option>javafx.controls,javafx.fxml</option>
                     </options>

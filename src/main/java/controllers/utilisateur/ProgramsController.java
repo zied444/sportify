@@ -110,7 +110,7 @@ public class ProgramsController {
 
     private void loadPrograms() {
         ObservableList<Programme> programmes = FXCollections.observableArrayList(
-                new Programme("Programme Débutant", "file:imgs/debutant.jpg", "Débutant"),
+                new Programme("Programme Débutant", "file:../imgs/debutant.jpg", "Débutant"),
                 new Programme("Programme Intermédiaire", "file:images/intermediaire.png", "Intermédiaire"),
                 new Programme("Programme Avancé", "file:images/avance.png", "Avancé"),
                 new Programme("Programme Perte de Poids", "file:images/perte_poids.png", "Tous niveaux"),
@@ -118,5 +118,15 @@ public class ProgramsController {
         );
 
         programTable.setItems(programmes);
+    }
+
+    @FXML
+    public void onBackHover() {
+        backButton.setStyle("-fx-background-color: #3367d6; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 6; -fx-padding: 10 20; -fx-cursor: hand;");
+    }
+
+    @FXML
+    public void onBackExit() {
+        backButton.setStyle("-fx-background-color: #4285f4; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 6; -fx-padding: 10 20; -fx-cursor: hand;");
     }
 }

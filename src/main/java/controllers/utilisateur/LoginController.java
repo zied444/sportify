@@ -63,10 +63,10 @@ public class LoginController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/main.fxml"));
                 Parent root = loader.load();
-
+                
                 MainController mainController = loader.getController();
                 mainController.setUser(user);
-
+                
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
@@ -83,7 +83,7 @@ public class LoginController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/Register.fxml"));
             Parent root = loader.load();
-
+            
             Stage stage = (Stage) registerButton.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

@@ -44,7 +44,7 @@ public class RegisterController {
     private void initialize() {
         try {
             // Initialiser le ChoiceBox avec les rôles disponibles
-            roleChoiceBox.setItems(FXCollections.observableArrayList(Roles.ATHLETE, Roles.COACH));
+            roleChoiceBox.setItems(FXCollections.observableArrayList(Roles.ATHLETE, Roles.COACH , Roles.ADMIN));
             roleChoiceBox.setValue(Roles.ATHLETE);
 
             // Ajouter les gestionnaires d'événements pour les boutons

@@ -7,22 +7,30 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.utilisateur.ProgramsController"
             prefHeight="600.0" prefWidth="1000.0"
-            stylesheets="@../styles/style.css">
+            stylesheets="@../styles/style1.css"
+            styleClass="root-pane">
 
-    <VBox spacing="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-          style="-fx-background-color: #e5e7e9; -fx-padding: 40 0 40 0;">
-        <VBox spacing="24" alignment="CENTER" style="-fx-padding: 0 40 0 40;">
-            <TableView fx:id="programTable" styleClass="modern-table" prefHeight="480" prefWidth="900">
-                <columns>
-                    <TableColumn fx:id="colProgramme" text="Programme" prefWidth="180"/>
-                    <TableColumn fx:id="colDescription" text="Description" prefWidth="320"/>
-                    <TableColumn fx:id="colNiveau" text="Niveau" prefWidth="180"/>
-                </columns>
-            </TableView>
-            <HBox spacing="10" alignment="CENTER_RIGHT">
-                <Button fx:id="backButton" text="Retour" styleClass="back-button" onAction="#handleBack"/>
-            </HBox>
-        </VBox>
+    <VBox spacing="30"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+          alignment="CENTER"
+          styleClass="content-wrapper">
+
+        <Label text="📋 Programmes Disponibles" styleClass="page-title"/>
+
+        <TableView fx:id="programTable" styleClass="modern-table" prefHeight="450" prefWidth="920">
+            <columns>
+                <TableColumn fx:id="colProgramme" text="Programme" prefWidth="220"/>
+                <TableColumn fx:id="colDescription" text="Description" prefWidth="360"/>
+                <TableColumn fx:id="colNiveau" text="Niveau" prefWidth="180"/>
+            </columns>
+        </TableView>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="button-bar">
+            <Button fx:id="backButton" text="Retour"
+                    onAction="#handleBack"
+                    onMouseEntered="#onBackHover"
+                    onMouseExited="#onBackExit"
+                    styleClass="btn-secondary"/>
+        </HBox>
     </VBox>
-
 </AnchorPane>

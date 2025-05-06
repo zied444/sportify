@@ -5,7 +5,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.utilisateur.Profil"
+            fx:controller="controllers.utilisateur.ViewProfileController"
             prefHeight="400.0" prefWidth="600.0"
             stylesheets="@../styles/style.css">
     <GridPane hgap="10" vgap="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml">

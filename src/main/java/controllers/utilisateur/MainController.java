@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import entities.Utilisateur;
+import service.UtilisateurService;
 import utils.NavigationUtils;
 import utils.AlertUtils;
 import java.io.IOException;
@@ -32,7 +33,6 @@ public class MainController {
     private void initialize() {
         viewProfileButton.setOnAction(event -> handleViewProfile());
         programsButton.setOnAction(event -> handlePrograms());
-       /* dashboardButton.setOnAction(event -> handleDashboard());*/
         editProfileButton.setOnAction(event -> handleEditProfile());
         logoutButton.setOnAction(event -> handleLogout());
         deleteAccountButton.setOnAction(event -> handleDeleteAccount());
@@ -91,8 +91,27 @@ public class MainController {
     }
 
     private void handleDeleteAccount() {
-        // À adapter selon la logique de suppression dans UtilisateurService
-        handleLogout();
+        if (currentUser == null) {
+            AlertUtils.showError("Erreur", "Aucun utilisateur connecté !");
+            return;
+        }
+
+        boolean confirmed = AlertUtils.showConfirmation(
+                "Suppression de compte",
+                "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
+        );
+
+        if (confirmed) {
+            UtilisateurService service = new UtilisateurService();
+            service.supprimerUtilisateur(currentUser.getId());
+
+            AlertUtils.showInfo("Compte supprimé", "Votre compte a été supprimé avec succès.");
+
+
+        }
+
+
+    handleLogout();
     }
 
     public void handleBack() {

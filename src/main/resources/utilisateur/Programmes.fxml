@@ -2,16 +2,15 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.utilisateur.ProgramsController"
             prefHeight="600.0" prefWidth="1000.0"
-            stylesheets="@../styles/style1.css"
-            styleClass="root-pane">
+            stylesheets="@../styles/style.css">
 
     <top>
         <HBox style="-fx-background-color: #0d1b4b;" spacing="20" alignment="CENTER_LEFT">
@@ -37,28 +36,34 @@
     </top>
 
     <center>
-        <VBox spacing="30"
-              AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-              alignment="CENTER"
-              styleClass="content-wrapper">
+        <StackPane>
+            <!-- Contenu principal -->
+            <VBox alignment="CENTER" spacing="20" maxWidth="1000">
+                <padding>
+                    <Insets top="50" right="50" bottom="50" left="50"/>
+                </padding>
 
-            <Label text="📋 Programmes Disponibles" styleClass="page-title"/>
+                <Label text="📋 Programmes Disponibles" styleClass="title-label"/>
 
-            <TableView fx:id="programTable" styleClass="modern-table" prefHeight="450" prefWidth="920">
-                <columns>
-                    <TableColumn fx:id="colProgramme" text="Programme" prefWidth="220"/>
-                    <TableColumn fx:id="colDescription" text="Description" prefWidth="360"/>
-                    <TableColumn fx:id="colNiveau" text="Niveau" prefWidth="180"/>
-                </columns>
-            </TableView>
+                <TableView fx:id="programTable" styleClass="modern-table" prefHeight="450" prefWidth="920">
+                    <columns>
+                        <TableColumn fx:id="colProgramme" text="Programme" prefWidth="220"/>
+                        <TableColumn fx:id="colDescription" text="Description" prefWidth="360"/>
+                        <TableColumn fx:id="colNiveau" text="Niveau" prefWidth="180"/>
+                    </columns>
+                </TableView>
+            </VBox>
 
-            <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="button-bar">
-                <Button fx:id="backButton" text="Retour"
-                        onAction="#handleBack"
-                        onMouseEntered="#onBackHover"
-                        onMouseExited="#onBackExit"
-                        styleClass="btn-secondary"/>
-            </HBox>
-        </VBox>
-      </center>
+            <!-- Bouton de retour en haut à gauche -->
+            <Button fx:id="backButton" text="Retour"
+                    onAction="#handleBack"
+                    styleClass="back-button"
+                    StackPane.alignment="TOP_LEFT">
+                <StackPane.margin>
+                    <Insets top="20" left="20"/>
+                </StackPane.margin>
+            </Button>
+        </StackPane>
+    </center>
+
 </BorderPane>

@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import utils.DatabaseInitializer;
+import controllers.utilisateur.LoginController;
 
 public class Main extends Application {
 
@@ -15,10 +16,15 @@ public class Main extends Application {
             DatabaseInitializer.initialize();
             
             // Load the login view
-            Parent root = FXMLLoader.load(getClass().getResource("/utilisateur/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/login.fxml"));
+            Parent root = loader.load();
+
+            // Set the stage in the controller
+            LoginController loginController = loader.getController();
+            loginController.setStage(primaryStage);
 
             // Create the scene with specific dimensions
-            Scene scene = new Scene(root ,900, 700);
+            Scene scene = new Scene(root, 900, 700);
 
             // Configure the stage
             primaryStage.setTitle("Sportify");

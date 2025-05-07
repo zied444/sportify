@@ -13,6 +13,7 @@ import interfaces.IService;
 import service.UtilisateurService;
 import utils.AlertUtils;
 import utils.EmailUtils;
+import utils.NavigationUtils;
 
 import java.io.IOException;
 
@@ -35,9 +36,14 @@ public class RegisterController {
     private Button cancelButton;
 
     private IService<Utilisateur> utilisateurService;
+    private Stage stage;
 
     public RegisterController() {
         this.utilisateurService = new UtilisateurService();
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     @FXML
@@ -112,22 +118,30 @@ public class RegisterController {
     @FXML
     private void handleBack() {
         try {
-            String fxmlPath = "/utilisateur/login.fxml";
-            System.out.println("Tentative de chargement de : " + fxmlPath);
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            if (loader.getLocation() == null) {
-                throw new IOException("Impossible de trouver le fichier FXML : " + fxmlPath);
+            // Utiliser le stage stocké s'il est disponible
+            if (stage != null) {
+                NavigationUtils.navigateTo("/utilisateur/login.fxml", stage);
+                return;
             }
-            
-            Parent root = loader.load();
-            Stage stage = (Stage) cancelButton.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
+
+            // Sinon, essayer de récupérer le stage depuis le bouton
+            if (cancelButton != null && cancelButton.getScene() != null) {
+                Stage currentStage = (Stage) cancelButton.getScene().getWindow();
+                NavigationUtils.navigateTo("/utilisateur/login.fxml", currentStage);
+                return;
+            }
+
+            // En dernier recours, essayer de récupérer le stage depuis n'importe quel nœud
+            if (emailField != null && emailField.getScene() != null) {
+                Stage currentStage = (Stage) emailField.getScene().getWindow();
+                NavigationUtils.navigateTo("/utilisateur/login.fxml", currentStage);
+                return;
+            }
+
+            throw new IllegalStateException("Impossible de trouver le stage pour la navigation");
+        } catch (Exception e) {
             e.printStackTrace();
-            AlertUtils.showError("Erreur", "Impossible de charger la vue de connexion : " + e.getMessage());
+            AlertUtils.showError("Erreur", "Impossible de retourner à la page de connexion : " + e.getMessage());
         }
     }
 } 

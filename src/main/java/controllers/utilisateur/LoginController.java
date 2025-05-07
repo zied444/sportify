@@ -27,10 +27,15 @@ public class LoginController {
     @FXML
     private Button registerButton;
 
-    private IService<Utilisateur> utilisateurService;
+    private UtilisateurService utilisateurService;
+    private Stage stage;
 
     public LoginController() {
         this.utilisateurService = new UtilisateurService();
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     @FXML
@@ -54,61 +59,103 @@ public class LoginController {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            AlertUtils.showError("Erreur", "Veuillez remplir tous les champs");
-            return;
-        }
-
-        Utilisateur user = ((UtilisateurService) utilisateurService).connecter(email, password);
-        if (user != null) {
-            try {
-                FXMLLoader loader;
-                if ("admin".equalsIgnoreCase(user.getRole())) {
-                    loader = new FXMLLoader(getClass().getResource("/admin/adminDashboard.fxml"));
-                    Parent root = loader.load();
-                    
-                    AdminDashboardController adminController = loader.getController();
-                    adminController.setCurrentAdmin(user);
-                    
-                    Stage stage = (Stage) loginButton.getScene().getWindow();
-                    Scene scene = new Scene(root);
-                    scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
-                    stage.setScene(scene);
-                    stage.show();
+        try {
+            Utilisateur user = utilisateurService.connecter(email, password);
+            if (user != null) {
+                System.out.println("Authentification réussie pour : " + user.getEmail());
+                
+                // Rediriger vers la vue appropriée selon le rôle
+                if (user.getRole().equals("ADMIN")) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin/dashboard.fxml"));
+                        Parent root = loader.load();
+                        
+                        AdminDashboardController controller = loader.getController();
+                        controller.setCurrentAdmin(user);
+                        
+                        Stage stage = (Stage) loginButton.getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        AlertUtils.showError("Erreur", "Impossible de charger le tableau de bord administrateur : " + e.getMessage());
+                    }
                 } else {
-                    loader = new FXMLLoader(getClass().getResource("/utilisateur/main.fxml"));
-                    Parent root = loader.load();
-                    
-                    MainController mainController = loader.getController();
-                    mainController.setUser(user);
-                    
-                    Stage stage = (Stage) loginButton.getScene().getWindow();
-                    Scene scene = new Scene(root);
-                    scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
-                    stage.setScene(scene);
-                    stage.show();
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/main.fxml"));
+                        Parent root = loader.load();
+                        
+                        MainController controller = loader.getController();
+                        controller.setUser(user);
+                        
+                        Stage stage = (Stage) loginButton.getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        AlertUtils.showError("Erreur", "Impossible de charger la vue principale: " + e.getMessage());
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace(); // Pour le débogage
-                AlertUtils.showError("Erreur", "Impossible de charger la vue principale: " + e.getMessage());
+            } else {
+                AlertUtils.showError("Erreur", "Email ou mot de passe incorrect");
             }
-        } else {
-            AlertUtils.showError("Erreur", "Email ou mot de passe incorrect");
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.showError("Erreur", "Une erreur est survenue lors de la connexion : " + e.getMessage());
         }
     }
 
     @FXML
     private void handleRegister() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/Register.fxml"));
-            Parent root = loader.load();
-            
-            Stage stage = (Stage) registerButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace(); // Ajout pour le débogage
-            AlertUtils.showError("Erreur", "Impossible de charger la vue d'inscription: " + e.getMessage());
+            // Utiliser le stage stocké s'il est disponible
+            if (stage != null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/Register.fxml"));
+                Parent root = loader.load();
+                
+                // Set the stage in the controller
+                RegisterController registerController = loader.getController();
+                registerController.setStage(stage);
+                
+                stage.setScene(new Scene(root));
+                stage.show();
+                return;
+            }
+
+            // Sinon, essayer de récupérer le stage depuis le bouton
+            if (registerButton != null && registerButton.getScene() != null) {
+                Stage currentStage = (Stage) registerButton.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/Register.fxml"));
+                Parent root = loader.load();
+                
+                // Set the stage in the controller
+                RegisterController registerController = loader.getController();
+                registerController.setStage(currentStage);
+                
+                currentStage.setScene(new Scene(root));
+                currentStage.show();
+                return;
+            }
+
+            // En dernier recours, essayer de récupérer le stage depuis n'importe quel nœud
+            if (emailField != null && emailField.getScene() != null) {
+                Stage currentStage = (Stage) emailField.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/Register.fxml"));
+                Parent root = loader.load();
+                
+                // Set the stage in the controller
+                RegisterController registerController = loader.getController();
+                registerController.setStage(currentStage);
+                
+                currentStage.setScene(new Scene(root));
+                currentStage.show();
+                return;
+            }
+
+            throw new IllegalStateException("Impossible de trouver le stage pour la navigation");
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.showError("Erreur", "Impossible de charger la vue d'inscription : " + e.getMessage());
         }
     }
 }

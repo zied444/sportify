@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import entities.Utilisateur;
 import utils.AlertUtils;
 import service.UtilisateurService;
+import utils.NavigationUtils;
 
 import java.io.IOException;
 
@@ -30,6 +31,7 @@ public class EditProfileController {
     private Button cancelButton;
 
     private Utilisateur currentUser;
+    private Stage stage;
 
     @FXML
     private void initialize() {
@@ -45,32 +47,64 @@ public class EditProfileController {
         cancelButton.setOnAction(event -> handleCancel());
     }
 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     private void validateFields() {
-        boolean isValid = !emailField.getText().isEmpty() && 
-                         !passwordField.getText().isEmpty() && 
-                         !nomField.getText().isEmpty() && 
-                         !prenomField.getText().isEmpty() &&
-                         !preferencesField.getText().isEmpty();
-        saveButton.setDisable(!isValid);
-    }
-
-    public void setUser(Utilisateur user) {
-        this.currentUser = user;
-        nomField.setText(user.getNom());
-        prenomField.setText(user.getPrenom());
-        emailField.setText(user.getEmail());
-        passwordField.setText(user.getPassword());
-        preferencesField.setText(user.getPreferencesSportives());
-    }
-
-    public void handleSave() {
+        if (emailField == null || passwordField == null || nomField == null || 
+            prenomField == null || preferencesField == null) {
+            return;
+        }
+        
         String email = emailField.getText();
         String password = passwordField.getText();
         String nom = nomField.getText();
         String prenom = prenomField.getText();
         String preferences = preferencesField.getText();
 
-        if (email.isEmpty() || password.isEmpty() || nom.isEmpty() || prenom.isEmpty() || preferences.isEmpty()) {
+        boolean isValid = email != null && !email.isEmpty() && 
+                         password != null && !password.isEmpty() && 
+                         nom != null && !nom.isEmpty() && 
+                         prenom != null && !prenom.isEmpty() &&
+                         preferences != null && !preferences.isEmpty();
+                         
+        saveButton.setDisable(!isValid);
+    }
+
+    public void setUser(Utilisateur user) {
+        if (user == null) {
+            AlertUtils.showError("Erreur", "Aucun utilisateur connecté");
+            returnToMain();
+            return;
+        }
+
+        this.currentUser = user;
+        if (nomField != null) nomField.setText(user.getNom());
+        if (prenomField != null) prenomField.setText(user.getPrenom());
+        if (emailField != null) emailField.setText(user.getEmail());
+        if (passwordField != null) passwordField.setText(user.getPassword());
+        if (preferencesField != null) preferencesField.setText(user.getPreferencesSportives());
+    }
+
+    public void handleSave() {
+        if (currentUser == null) {
+            AlertUtils.showError("Erreur", "Aucun utilisateur connecté");
+            returnToMain();
+            return;
+        }
+
+        String email = emailField.getText();
+        String password = passwordField.getText();
+        String nom = nomField.getText();
+        String prenom = prenomField.getText();
+        String preferences = preferencesField.getText();
+
+        if (email == null || email.isEmpty() || 
+            password == null || password.isEmpty() || 
+            nom == null || nom.isEmpty() || 
+            prenom == null || prenom.isEmpty() || 
+            preferences == null || preferences.isEmpty()) {
             AlertUtils.showError("Erreur", "Veuillez remplir tous les champs");
             return;
         }
@@ -109,18 +143,20 @@ public class EditProfileController {
     }
 
     private void returnToMain() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/main.fxml"));
-            Parent root = loader.load();
-            
-            MainController controller = loader.getController();
-            controller.setUser(currentUser);
-            
-            Stage stage = (Stage) saveButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            AlertUtils.showError("Erreur", "Une erreur est survenue lors du retour à la page principale");
+        if (stage == null) {
+            // Si le stage n'est pas défini, essayer de le récupérer depuis le bouton
+            if (cancelButton != null && cancelButton.getScene() != null) {
+                stage = (Stage) cancelButton.getScene().getWindow();
+            } else {
+                // Si on ne peut toujours pas obtenir le stage, utiliser la fenêtre principale
+                stage = (Stage) emailField.getScene().getWindow();
+            }
+        }
+
+        if (currentUser != null) {
+            NavigationUtils.navigateTo("/utilisateur/main.fxml", stage, currentUser);
+        } else {
+            NavigationUtils.navigateTo("/utilisateur/login.fxml", stage);
         }
     }
 } 

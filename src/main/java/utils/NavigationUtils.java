@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import entities.Utilisateur;
+import controllers.utilisateur.EditProfileController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +32,9 @@ public class NavigationUtils {
                 if (utilisateur == null) {
                     throw new IllegalArgumentException("L'utilisateur ne peut pas être null pour la vue d'édition de profil");
                 }
-                ((controllers.utilisateur.EditProfileController) controller).setUser(utilisateur);
+                EditProfileController editController = (EditProfileController) controller;
+                editController.setUser(utilisateur);
+                editController.setStage(currentStage);
             }
             
             currentStage.setScene(new Scene(root));

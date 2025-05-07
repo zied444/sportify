@@ -28,11 +28,11 @@
 
     <!-- Left Sidebar -->
     <left>
-        <VBox styleClass="card" spacing="15" prefWidth="200">
+        <VBox styleClass="card" spacing="15" prefWidth="250">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
-            <Button text="Afficher Utilisateurs" onAction="#handleShowUsers" styleClass="primary-button" maxWidth="Infinity"/>
+            <Button text="Afficher Users" onAction="#handleShowUsers" styleClass="primary-button" maxWidth="Infinity"/>
             <Button text="Modifier Profil" onAction="#handleEditProfile" styleClass="primary-button" maxWidth="Infinity"/>
             <Button text="Supprimer Compte" onAction="#handleDeleteAccount" styleClass="danger-button" maxWidth="Infinity"/>
             <Button text="Déconnexion" onAction="#handleLogout" styleClass="primary-button" maxWidth="Infinity"/>
@@ -52,7 +52,7 @@
                     <TableColumn fx:id="colPrenom" text="Prénom" prefWidth="150"/>
                     <TableColumn fx:id="colEmail" text="Email" prefWidth="200"/>
                     <TableColumn fx:id="colRole" text="Rôle" prefWidth="100"/>
-                    <TableColumn fx:id="colActions" text="Actions" prefWidth="100"/>
+                    <TableColumn fx:id="colActions" text="Actions" prefWidth="200"/>
                 </columns>
             </TableView>
         </VBox>

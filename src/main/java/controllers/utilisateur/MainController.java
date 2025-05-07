@@ -17,15 +17,12 @@ public class MainController {
     private Button viewProfileButton;
     @FXML
     private Button programsButton;
-
     @FXML
     private Button editProfileButton;
     @FXML
     private Button logoutButton;
     @FXML
     private Button deleteAccountButton;
-    @FXML
-    private Button backButton;
 
     private Utilisateur currentUser;
 
@@ -36,7 +33,6 @@ public class MainController {
         editProfileButton.setOnAction(event -> handleEditProfile());
         logoutButton.setOnAction(event -> handleLogout());
         deleteAccountButton.setOnAction(event -> handleDeleteAccount());
-        backButton.setOnAction(event -> handleBack());
     }
 
     public void setUser(Utilisateur user) {
@@ -76,8 +72,6 @@ public class MainController {
         }
     }
 
-
-
     private void handleEditProfile() {
         if (currentUser == null) {
             AlertUtils.showError("Erreur", "Vous devez être connecté pour modifier votre profil");
@@ -104,17 +98,8 @@ public class MainController {
         if (confirmed) {
             UtilisateurService service = new UtilisateurService();
             service.supprimerUtilisateur(currentUser.getId());
-
             AlertUtils.showInfo("Compte supprimé", "Votre compte a été supprimé avec succès.");
-
-
+            handleLogout();
         }
-
-
-    handleLogout();
-    }
-
-    public void handleBack() {
-        NavigationUtils.navigateTo("/utilisateur/login.fxml", (Stage) backButton.getScene().getWindow());
     }
 } 

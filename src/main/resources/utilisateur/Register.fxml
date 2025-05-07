@@ -5,33 +5,54 @@
 <?import javafx.geometry.*?>
 <?import javafx.collections.FXCollections?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8"
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.utilisateur.RegisterController"
             prefHeight="600.0" prefWidth="800.0"
             stylesheets="@../styles/style.css">
-
-    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="50.0"
-          AnchorPane.rightAnchor="50.0" AnchorPane.bottomAnchor="50.0">
-        <Label text="Créer un compte" styleClass="title-label"/>
-        <Label text="Remplissez le formulaire pour vous inscrire" styleClass="subtitle-label"/>
-        
-        <VBox spacing="15" alignment="CENTER" styleClass="card" prefWidth="400">
-            <TextField fx:id="emailField" promptText="Email" styleClass="text-field" prefWidth="300"/>
-            <PasswordField fx:id="passwordField" promptText="Mot de passe" styleClass="password-field" prefWidth="300"/>
-            <TextField fx:id="nomField" promptText="Nom" styleClass="text-field" prefWidth="300"/>
-            <TextField fx:id="prenomField" promptText="Prénom" styleClass="text-field" prefWidth="300"/>
-            <ChoiceBox fx:id="roleChoiceBox" prefWidth="300"/>
-            <TextField fx:id="preferencesField" promptText="Préférences sportives (ex: Football, Tennis)" styleClass="text-field" prefWidth="300"/>
-            <HBox spacing="10" alignment="CENTER">
-                <Button text="S'inscrire" fx:id="registerButton" styleClass="primary-button" prefWidth="145"/>
-                <Button text="Annuler" fx:id="cancelButton" styleClass="primary-button" prefWidth="145"/>
+    <top>
+        <HBox style="-fx-background-color: #0d1b4b;" spacing="20" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="15" right="30" bottom="15" left="30"/>
+            </padding>
+            <ImageView fitHeight="50" fitWidth="50" preserveRatio="true">
+                <Image url="/imgs/logo.png"/>
+            </ImageView>
+            <HBox spacing="30" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                <Button text="Événements" styleClass="nav-button"/>
+                <Button text="Produits" styleClass="nav-button"/>
+                <Button text="Services" styleClass="nav-button"/>
+                <Button text="Entraînement" styleClass="nav-button"/>
+                <Button text="Avis" styleClass="nav-button"/>
+                <Button text="À propos" styleClass="nav-button"/>
             </HBox>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="50.0"
+              AnchorPane.rightAnchor="50.0" AnchorPane.bottomAnchor="50.0">
+            <Label text="Créer un compte" styleClass="title-label"/>
+            <Label text="Remplissez le formulaire pour vous inscrire" styleClass="subtitle-label"/>
+
+            <VBox spacing="15" alignment="CENTER" styleClass="card" prefWidth="400">
+                <TextField fx:id="emailField" promptText="Email" styleClass="text-field" prefWidth="300"/>
+                <PasswordField fx:id="passwordField" promptText="Mot de passe" styleClass="password-field" prefWidth="300"/>
+                <TextField fx:id="nomField" promptText="Nom" styleClass="text-field" prefWidth="300"/>
+                <TextField fx:id="prenomField" promptText="Prénom" styleClass="text-field" prefWidth="300"/>
+                <ChoiceBox fx:id="roleChoiceBox" prefWidth="300"/>
+                <TextField fx:id="preferencesField" promptText="Préférences sportives (ex: Football, Tennis)" styleClass="text-field" prefWidth="300"/>
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="S'inscrire" fx:id="registerButton" styleClass="primary-button" prefWidth="145"/>
+                    <Button text="Annuler" fx:id="cancelButton" styleClass="primary-button" prefWidth="145"/>
+                </HBox>
+            </VBox>
         </VBox>
-    </VBox>
 
-    <!-- Bouton de retour en haut à gauche -->
-    <Button fx:id="backButton" text="Retour" styleClass="back-button" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20"
-            onAction="#handleBack"/>
-
-</AnchorPane>
+        <!-- Bouton de retour en haut à gauche -->
+        <Button fx:id="backButton" text="Retour" styleClass="back-button" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20"
+                onAction="#handleBack"/>
+    </center>
+</BorderPane>

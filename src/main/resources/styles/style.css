@@ -34,7 +34,7 @@
 }
 
 .primary-button {
-    -fx-background-color: #217a4b;
+    -fx-background-color: #145c36;
     -fx-text-fill: #fff;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
@@ -47,7 +47,7 @@
 }
 
 .primary-button:hover {
-    -fx-background-color: #145c36;
+    -fx-background-color: #0d3d24;
     -fx-effect: dropshadow(gaussian, rgba(33,122,75,0.18), 8, 0, 0, 4);
     -fx-scale-x: 1.04;
     -fx-scale-y: 1.04;
@@ -318,4 +318,17 @@ GridPane .password-field {
 .admin-grid .password-field {
     -fx-pref-width: 220px;
     -fx-min-width: 220px;
+}
+
+/* Styles pour les boutons de navigation */
+.nav-button {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-padding: 5 10;
+}
+
+.nav-button:hover {
+    -fx-text-fill: #4CAF50;
 }

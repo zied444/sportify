@@ -3,34 +3,62 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8"
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.utilisateur.ProgramsController"
             prefHeight="600.0" prefWidth="1000.0"
             stylesheets="@../styles/style1.css"
             styleClass="root-pane">
 
-    <VBox spacing="30"
-          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-          alignment="CENTER"
-          styleClass="content-wrapper">
+    <top>
+        <HBox style="-fx-background-color: #0d1b4b;" spacing="20" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="15" right="30" bottom="15" left="30"/>
+            </padding>
 
-        <Label text="📋 Programmes Disponibles" styleClass="page-title"/>
+            <!-- Logo -->
+            <ImageView fitHeight="50" fitWidth="50" preserveRatio="true">
+                <Image url="/imgs/logo.png"/>
+            </ImageView>
 
-        <TableView fx:id="programTable" styleClass="modern-table" prefHeight="450" prefWidth="920">
-            <columns>
-                <TableColumn fx:id="colProgramme" text="Programme" prefWidth="220"/>
-                <TableColumn fx:id="colDescription" text="Description" prefWidth="360"/>
-                <TableColumn fx:id="colNiveau" text="Niveau" prefWidth="180"/>
-            </columns>
-        </TableView>
-
-        <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="button-bar">
-            <Button fx:id="backButton" text="Retour"
-                    onAction="#handleBack"
-                    onMouseEntered="#onBackHover"
-                    onMouseExited="#onBackExit"
-                    styleClass="btn-secondary"/>
+            <!-- Navigation Buttons -->
+            <HBox spacing="30" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                <Button text="Événements" styleClass="nav-button"/>
+                <Button text="Produits" styleClass="nav-button"/>
+                <Button text="Services" styleClass="nav-button"/>
+                <Button text="Entraînement" styleClass="nav-button"/>
+                <Button text="Avis" styleClass="nav-button"/>
+                <Button text="À propos" styleClass="nav-button"/>
+            </HBox>
         </HBox>
-    </VBox>
-</AnchorPane>
+    </top>
+
+    <center>
+        <VBox spacing="30"
+              AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+              alignment="CENTER"
+              styleClass="content-wrapper">
+
+            <Label text="📋 Programmes Disponibles" styleClass="page-title"/>
+
+            <TableView fx:id="programTable" styleClass="modern-table" prefHeight="450" prefWidth="920">
+                <columns>
+                    <TableColumn fx:id="colProgramme" text="Programme" prefWidth="220"/>
+                    <TableColumn fx:id="colDescription" text="Description" prefWidth="360"/>
+                    <TableColumn fx:id="colNiveau" text="Niveau" prefWidth="180"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="button-bar">
+                <Button fx:id="backButton" text="Retour"
+                        onAction="#handleBack"
+                        onMouseEntered="#onBackHover"
+                        onMouseExited="#onBackExit"
+                        styleClass="btn-secondary"/>
+            </HBox>
+        </VBox>
+      </center>
+</BorderPane>

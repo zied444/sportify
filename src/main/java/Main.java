@@ -18,7 +18,7 @@ public class Main extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("/utilisateur/login.fxml"));
 
             // Create the scene with specific dimensions
-            Scene scene = new Scene(root, 800, 600);
+            Scene scene = new Scene(root ,900, 700);
 
             // Configure the stage
             primaryStage.setTitle("Sportify");
@@ -29,8 +29,9 @@ public class Main extends Application {
                 System.out.println("Logo not found: " + e.getMessage());
             }
 
-            primaryStage.setMinWidth(800);
-            primaryStage.setMinHeight(600);
+            primaryStage.setMaximized(true);
+            primaryStage.setMinWidth(900);
+            primaryStage.setMinHeight(700);
 
             primaryStage.setScene(scene);
             

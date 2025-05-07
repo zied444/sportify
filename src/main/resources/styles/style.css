@@ -263,7 +263,7 @@ GridPane .password-field {
     -fx-background-radius: 18px;
     -fx-border-radius: 18px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
-    -fx-padding: 8 0 8 0;
+    -fx-padding:0 0 0 0;
     -fx-border-width: 0;
     -fx-margin: 12 0 12 0;
     -fx-table-cell-border-color: transparent;

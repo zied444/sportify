@@ -12,21 +12,21 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-            // Initialize the database
+
             DatabaseInitializer.initialize();
             
-            // Load the login view
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/login.fxml"));
             Parent root = loader.load();
 
-            // Set the stage in the controller
+
             LoginController loginController = loader.getController();
             loginController.setStage(primaryStage);
 
-            // Create the scene with specific dimensions
+
             Scene scene = new Scene(root, 900, 700);
 
-            // Configure the stage
+
             primaryStage.setTitle("Sportify");
             
             try {

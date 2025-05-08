@@ -41,7 +41,7 @@ public class LoginController {
 
     @FXML
     private void initialize() {
-        // Activer le bouton de connexion uniquement si les champs sont remplis
+
         loginButton.setDisable(true);
         emailField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());
         passwordField.textProperty().addListener((obs, oldVal, newVal) -> validateFields());

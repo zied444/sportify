@@ -16,6 +16,7 @@ import utils.AlertUtils;
 import utils.NavigationUtils;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class LoginController {
     @FXML
@@ -63,24 +64,35 @@ public class LoginController {
             Utilisateur user = utilisateurService.connecter(email, password);
             if (user != null) {
                 System.out.println("Authentification réussie pour : " + user.getEmail());
+                System.out.println("Rôle de l'utilisateur : " + user.getRole());
+                System.out.println("Comparaison du rôle : " + "Admin".equalsIgnoreCase(user.getRole()));
                 
                 // Rediriger vers la vue appropriée selon le rôle
-                if (user.getRole().equals("ADMIN")) {
+                if ("Admin".equalsIgnoreCase(user.getRole())) {
+                    System.out.println("Tentative de chargement du tableau de bord administrateur...");
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin/dashboard.fxml"));
+                        URL resource = getClass().getResource("/admin/adminDashboard.fxml");
+                        System.out.println("URL de la ressource : " + resource);
+                        
+                        FXMLLoader loader = new FXMLLoader(resource);
                         Parent root = loader.load();
                         
                         AdminDashboardController controller = loader.getController();
                         controller.setCurrentAdmin(user);
                         
                         Stage stage = (Stage) loginButton.getScene().getWindow();
-                        stage.setScene(new Scene(root));
+                        Scene scene = new Scene(root);
+                        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+                        stage.setScene(scene);
                         stage.show();
+                        System.out.println("Tableau de bord administrateur chargé avec succès");
                     } catch (IOException e) {
+                        System.err.println("Erreur lors du chargement du tableau de bord administrateur :");
                         e.printStackTrace();
                         AlertUtils.showError("Erreur", "Impossible de charger le tableau de bord administrateur : " + e.getMessage());
                     }
                 } else {
+                    System.out.println("Redirection vers la vue utilisateur...");
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/utilisateur/main.fxml"));
                         Parent root = loader.load();
@@ -89,17 +101,23 @@ public class LoginController {
                         controller.setUser(user);
                         
                         Stage stage = (Stage) loginButton.getScene().getWindow();
-                        stage.setScene(new Scene(root));
+                        Scene scene = new Scene(root);
+                        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+                        stage.setScene(scene);
                         stage.show();
+                        System.out.println("Vue utilisateur chargée avec succès");
                     } catch (IOException e) {
+                        System.err.println("Erreur lors du chargement de la vue utilisateur :");
                         e.printStackTrace();
                         AlertUtils.showError("Erreur", "Impossible de charger la vue principale: " + e.getMessage());
                     }
                 }
             } else {
+                System.out.println("Échec de l'authentification : email ou mot de passe incorrect");
                 AlertUtils.showError("Erreur", "Email ou mot de passe incorrect");
             }
         } catch (Exception e) {
+            System.err.println("Erreur lors de la connexion :");
             e.printStackTrace();
             AlertUtils.showError("Erreur", "Une erreur est survenue lors de la connexion : " + e.getMessage());
         }

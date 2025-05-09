@@ -15,7 +15,7 @@
             stylesheets="@../styles/style.css">
 
     <top>
-        <HBox style="-fx-background-color: #0d1b4b;" spacing="20" alignment="CENTER_LEFT">
+        <HBox style="-fx-background-color: #08080b;" spacing="20" alignment="CENTER_LEFT">
             <padding>
                 <Insets top="15" right="30" bottom="15" left="30"/>
             </padding>
